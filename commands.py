@@ -1,7 +1,7 @@
 from main import db
 from flask import Blueprint
-from models.product import Product
-from models.supplier import Supplier
+from models.products import Product
+from models.suppliers import Supplier
 
 db_commands = Blueprint("db", __name__)
 
@@ -49,7 +49,7 @@ def seed_db():
         phone_number="0412345678"
     )
     db.session.add(supplier2)
-    
+
     # commit the changes
     db.session.commit()
     print("Table seeded")
