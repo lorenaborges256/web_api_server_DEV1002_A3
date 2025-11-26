@@ -7,10 +7,10 @@ class CategorySchema(ma.Schema):
     category_id = fields.Int()
     name = fields.Str()
     description = fields.Str()
-
+    products = fields.Nested("ProductSchema", many=True, only=["name", "unit_price"])
     class Meta:
         # Fields to expose
-        fields = ("category_id", "name", "description")
+        fields = ("category_id", "name", "description", "products")
 
 # single category schema, when one category needs to be retrieved
 category_schema = CategorySchema()
