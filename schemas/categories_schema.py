@@ -3,6 +3,7 @@ from marshmallow import fields
 
 # create the Category Schema with Marshmallow, it will provide the serialization needed for converting the data into JSON
 class CategorySchema(ma.Schema):
+    ordered = True
     # Fields to expose
     category_id = fields.Int()
     name = fields.Str()

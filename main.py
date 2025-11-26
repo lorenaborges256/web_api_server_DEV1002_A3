@@ -15,6 +15,7 @@ def create_app():
 
     # configuring our app:
     app.config.from_object("config.app_config")
+    app.json.sort_keys = False
 
     # initialising our database object with the flask app
     db.init_app(app)
