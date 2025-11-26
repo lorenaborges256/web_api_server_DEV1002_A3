@@ -12,3 +12,8 @@ class Product(db.Model):
     description = db.Column(db.String())
     quantity = db.Column(db.Integer())
     unit_price = db.Column(Numeric(10, 2))
+    category_id = db.Column(db.Integer, db.ForeignKey("categories.category_id"), nullable=False)
+    category = db.relationship(
+        "Category", 
+        back_populates="products"
+    )

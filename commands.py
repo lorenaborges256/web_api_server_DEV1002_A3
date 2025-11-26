@@ -2,6 +2,7 @@ from main import db
 from flask import Blueprint
 from models.products import Product
 from models.suppliers import Supplier
+from models.categories import Category
 
 db_commands = Blueprint("db", __name__)
 
@@ -14,13 +15,29 @@ def create_db():
 
 @db_commands .cli.command("seed")
 def seed_db():
+        #create the Category object
+    category1 = Category(
+        name="shampoo",
+        description="product to clean hair"
+    )
+    db.session.add(category1)
+
+    category2 = Category(
+        name="conditioner",
+        description="product to soften hair"
+    )
+    db.session.add(category2)
+        # commit the changes
+    db.session.commit()
+    
     # create the Product object
     product1 = Product(
         # set the attributes, not the id, SQLAlchemy will manage that for us
         name="Aloe Vera Super Shampoo",
         description="Shampoo made from organic Aloe Vera for healthy hair",
-        quantity= 10,
-        unit_price=3
+        quantity=10,
+        unit_price=3,
+        category_id=category1.category_id
     )
     # Add the object as a new row to the table
     db.session.add(product1)
@@ -30,7 +47,8 @@ def seed_db():
         name="Aloe Vera Super Conditioner",
         description="Conditioner made from organic Aloe Vera for healthy hair",
         quantity= 8,
-        unit_price=2.5
+        unit_price=2.5,
+        category_id=category2.category_id
     )
     # Add the object as a new row to the table
     db.session.add(product2)
@@ -49,6 +67,8 @@ def seed_db():
         phone_number="0412345678"
     )
     db.session.add(supplier2)
+
+
 
     # commit the changes
     db.session.commit()

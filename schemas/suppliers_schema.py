@@ -7,12 +7,13 @@ class SupplierSchema(ma.Schema):
     supplier_id = fields.Int()
     name = fields.Str()
     contact_email = fields.Str()
-    phone_number = fields.Str()
+    phone_number = fields.Str() 
+
     class Meta:
         # Fields to expose
         fields = ("supplier_id", "name", "contact_email", "phone_number")
 
-# single competition schema, when one competition needs to be retrieved
+# single supplier schema, when one supplier needs to be retrieved
 supplier_schema = SupplierSchema()
-# multiple competition schema, when many competitions need to be retrieved
+# multiple supplier schema, when many suppliers need to be retrieved
 suppliers_schema = SupplierSchema(many=True)
