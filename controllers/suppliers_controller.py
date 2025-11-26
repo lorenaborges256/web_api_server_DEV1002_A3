@@ -3,7 +3,7 @@ from main import db
 from models.suppliers import Supplier
 from schemas.suppliers_schema import supplier_schema, suppliers_schema
 
-suppliers = Blueprint('participants', __name__, url_prefix="/suppliers")
+suppliers = Blueprint('suppliers', __name__, url_prefix="/suppliers")
 
 # GET suppliers list
 @suppliers.route("/", methods=["GET"])
