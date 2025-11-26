@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, abort
+from flask import Blueprint, jsonify, request
 from main import db
 from models.suppliers import Supplier
 from schemas.suppliers_schema import supplier_schema, suppliers_schema
@@ -23,7 +23,7 @@ def get_supplier(supplier_id):
     supplier = db.session.scalar(stmt)
     #return an error if the supplier doesn't exist
     if not supplier:
-        return abort(400, description= "supplier does not exist")
+        return jsonify({"error": "Supplier does not exist"}), 400
     # Convert the supplier from the database into a JSON format and store them in result
     result = supplier_schema.dump(supplier)
     # return the data in JSON format
@@ -53,7 +53,7 @@ def delete_supplier(supplier_id):
     supplier = db.session.scalar(stmt)
     # return an error if the supplier doesn't exist
     if not supplier:
-        return abort(400, description= "Supplier doesn't exist")
+        return jsonify({"error": "Supplier does not exist"}), 400
     # Delete the Supplier from the database and commit
     db.session.delete(supplier)
     db.session.commit()
@@ -72,7 +72,7 @@ def update_supplier(supplier_id):
 
     # return an error if the supplier doesn't exist
     if not supplier:
-        return abort(400, description= "Supplier does not exist")
+        return jsonify({"error": "Supplier does not exist"}), 400
     # update the supplier details with the given values
     supplier.name = supplier_fields["name"]
     supplier.contact_email = supplier_fields["contact_email"]

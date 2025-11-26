@@ -1,6 +1,7 @@
-from flask import Blueprint, jsonify, request, abort
+from flask import Blueprint, jsonify, request
 from main import db
 from models.products import Product
+from models.categories import Category
 from schemas.products_schema import product_schema, products_schema
 
 products = Blueprint('products', __name__, url_prefix="/products")
@@ -23,7 +24,7 @@ def get_product(product_id):
     product = db.session.scalar(stmt)
     #return an error if the product doesn't exist
     if not product:
-        return abort(400, description= "Product does not exist")
+        return jsonify({"error": "Product does not exist"}), 400
     # Convert the product from the database into a JSON format and store them in result
     result = product_schema.dump(product)
     # return the data in JSON format
@@ -35,11 +36,18 @@ def get_product(product_id):
 def create_product():
     # Create a new product
     product_fields = product_schema.load(request.json)
+
+    # Check if category exists
+    category = Category.query.get(product_fields["category_id"])
+    if not category:
+        return jsonify({"error": "Category ID does not exist"}), 400
+
     new_product = Product()
     new_product.name = product_fields["name"]
     new_product.description = product_fields["description"]
     new_product.quantity = product_fields["quantity"]
     new_product.unit_price = product_fields["unit_price"]
+    new_product.category_id = product_fields["category_id"]
     # add to the database and commit
     db.session.add(new_product)
     db.session.commit()
@@ -55,7 +63,8 @@ def delete_product(product_id):
     product = db.session.scalar(stmt)
     # return an error if the product doesn't exist
     if not product:
-        return abort(400, description= "Product doesn't exist")
+        return jsonify({"error": "Product does not exist"}), 400
+    
     # Delete the product from the database and commit
     db.session.delete(product)
     db.session.commit()
@@ -74,12 +83,14 @@ def update_product(product_id):
 
     # return an error if the product doesn't exist
     if not product:
-        return abort(400, description= "Product does not exist")
+        return jsonify({"error": "Product does not exist"}), 400
+    
     # update the product details with the given values
     product.name = product_fields["name"]
     product.description = product_fields["description"]
     product.quantity = product_fields["quantity"]
     product.unit_prie = product_fields["unit_price"]
+    product.category_id = product_fields["category_id"]
     # add to the database and commit
     db.session.commit()
     #return the product in the response

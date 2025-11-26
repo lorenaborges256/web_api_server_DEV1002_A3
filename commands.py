@@ -27,7 +27,8 @@ def seed_db():
         description="product to soften hair"
     )
     db.session.add(category2)
-        # commit the changes
+    
+    # commit the changes
     db.session.commit()
     
     # create the Product object
