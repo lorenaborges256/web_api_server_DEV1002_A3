@@ -34,7 +34,7 @@ def create_product():
 
 
 # The DELETE route endpoint
-@products.route("/<int:id>/", methods=["DELETE"])
+@products.route("/<int:product_id>/", methods=["DELETE"])
 def delete_product(product_id):
     # find the product
     stmt = db.select(Product).filter_by(product_id=product_id)

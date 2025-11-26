@@ -1,4 +1,6 @@
 from main import db
+from sqlalchemy import Numeric
+
 
 class Product(db.Model):
     # define the table name for the db
@@ -9,4 +11,4 @@ class Product(db.Model):
     name = db.Column(db.String())
     description = db.Column(db.String())
     quantity = db.Column(db.Integer())
-    unit_price = db.Column(db.Integer)
+    unit_price = db.Column(Numeric(10, 2))
