@@ -33,7 +33,7 @@ def create_supplier():
 
 
 # The DELETE route endpoint
-@suppliers.route("/<int:id>/", methods=["DELETE"])
+@suppliers.route("/<int:supplier_id>/", methods=["DELETE"])
 def delete_supplier(supplier_id):
     # find the supplier
     stmt = db.select(Supplier).filter_by(supplier_id=supplier_id)
