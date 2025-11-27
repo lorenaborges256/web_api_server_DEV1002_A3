@@ -17,3 +17,8 @@ class Product(db.Model):
         "Category", 
         back_populates="products"
     )
+    product_suppliers = db.relationship(
+        "Product_Supplier",
+        back_populates="product",
+        cascade="all, delete"
+    )
