@@ -1,6 +1,9 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # creating our database object! This allows us to use our ORM
 db = SQLAlchemy()
