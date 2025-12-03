@@ -28,45 +28,27 @@ As part of the planning stage, I sought feedback from two peers to refine the ER
 
 Both sets of feedback were highly valuable in strengthening the ERD and database design:
 
-- Amelia’s feedback ensured the **accuracy of relationships** in the junction table, preventing misinterpretation of the many-to-many structure.  
-- Courtney’s feedback improved **data integrity and clarity**, ensuring that products are always tied to a category and that duplicate records are avoided.  
+- **Feedback 1** ensured the **accuracy of relationships** in the junction table, preventing misinterpretation of the many-to-many structure.  
+- **Feedback 2** improved **data integrity and clarity**, ensuring that products are always tied to a category and that duplicate records are avoided.  
 
 By implementing these changes, the ERD now better reflects real-world inventory management requirements and enforces stricter relational rules, making the system more reliable and scalable.
 
 # Inventory Management Web Server
 
-### Entity Relationship Diagram (ERD)
+The inventory management system was designed to streamline the organization and tracking of products, their categories, and supplier relationships. 
+
+It its core, the system models three primary entities — Category, Product, and Supplier — each with distinct attributes and roles. Products are grouped under categories for logical classification, and each product can be sourced from multiple suppliers. 
+
+To manage these many-to-many relationships, the Product_Supplier junction table records key transactional details such as supply price and last supplied date. This structure ensures efficient data normalization, supports scalable inventory operations, and enables precise control over stock sourcing and categorization.
+
+## Entity Relationship Diagram (ERD)
 The database schema includes four core entities:
 ![ERD](images/Inventory_Management_ERD.png)
 
-- **Category**
-  - `category_id` (Primary Key)
-  - `name`
-  - `description`
-
-- **Product**
-  - `product_id` (Primary Key)
-  - `name`
-  - `description`
-  - `quantity`
-  - `unit_price`
-  - `category_id` (Foreign Key → Category)
-
-- **Supplier**
-  - `supplier_id` (Primary Key)
-  - `name`
-  - `contact_email`
-  - `phone_number`
-
-- **Product_Supplier** (junction table)
-  - `product_id` (Primary Key, Foreign Key → Product)
-  - `supplier_id` (Primary Key, Foreign Key → Supplier)
-  - `supply_price`
-  - `last_supplied_date`
-
 **Relationships:**
-- Each product belongs to one category.
-- A product can be supplied by multiple suppliers.
+- Each Product belongs to one Category.
+- A Product can be supplied by multiple Suppliers.
+- One Supplier can offer many Products.
 - The `Product_Supplier` table tracks supply price and last supplied date for each product-supplier pair.
 
 ## Design Requirements
