@@ -1,11 +1,9 @@
 ### DEV1002 - Databases & Servers-  Assessment 3 - Web API Server
 
-# Inventory Management Web Server
-
 ## Project Overview
 This project is a Flask-based inventory management web server built in Python. It provides structured endpoints for managing products, suppliers, and categories, with a relational database backend to ensure data integrity and flexible querying.
 
-## Entity Relationship Diagram (ERD)
+### Entity Relationship Diagram (ERD)
 The database schema includes four core entities:
 ![ERD](images/Inventory_Management_ERD.png)
 
@@ -89,40 +87,36 @@ Both sets of feedback were highly valuable in strengthening the ERD and database
 
 By implementing these changes, the ERD now better reflects real-world inventory management requirements and enforces stricter relational rules, making the system more reliable and scalable.
 
+# Inventory Management Web Server
 
+## Design Requirements
 
+The inventory management web server was designed to meet deployment, functionality, and data integrity standards. It is available at a publicly accessible endpoint via Render [(https://web-api-server-dev1002-a3.onrender.com)] and can also be run locally through Flask at `http://127.0.0.1:5000/`. This dual setup ensures consistency between development and production environments.
 
-# Inventory Management ERD
-- Each Product belongs to one Category
-- Product can be supplied by multiple Suppliers
-- Junction table, Product_Supplier, tracks supply price and last supplied date
+### Deployment & Functionality
+- Publicly accessible via Render
+- Functions properly in both local (`http://127.0.0.1:5000/`) and deployed environments
+- Persistent data storage using PostgreSQL
 
-## Database
-DATABASE_URL="postgresql+psycopg2://username:password@host:port/database_name
-1. create a database
-- Connect to postgres
-```bash
-sudo -u postgres psql
-```
-- create a database
-```
-CREATE DATABASE inventory_db;
-```
-- see all database in the system -> \l
-- see all users int he system -> \du
-- connect to database \c inventory_db
-- see all tables -> \dt
+### Data Validation & Security
+- Input data validated and sanitised through **Marshmallow schemas**
+- Prevents malformed or duplicate entries
+- Unique constraints applied to fields such as `category.name` and `supplier.contact_email`
 
-- create user
-```
-CREATE USER inventory_dev PASSWORD '123456';
-```
-- grant privileges to database
-```
-GRANT ALL PRIVILEGES ON DATABASE inventory_db TO inventory_dev;
-```
-- grant privileges to schema, (to find schemas name \dn)
-```
-GRANT ALL PRIVILEGES ON SCHEMA public TO inventory_dev;
-```
-- 
+### RESTful API Design
+- **GET** → Retrieve data  
+- **POST** → Create new records  
+- **PUT** → Update existing records  
+- **DELETE** → Remove records  
+
+These endpoints provide complete CRUD coverage for categories, products, and suppliers.
+
+### Database Alignment
+- Schema directly implements the **Entity Relationship Diagram (ERD)**
+- Normalised to **Third Normal Form (3NF)** to eliminate redundancy and enforce dependencies
+- Junction table `Product_Supplier` isolates many-to-many relationships
+- Constraints ensure relational integrity and scalability
+
+---
+
+This alignment between design and implementation guarantees that the web server is robust, reliable, and optimised for real-world inventory management scenarios.

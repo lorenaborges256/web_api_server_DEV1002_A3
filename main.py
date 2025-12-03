@@ -25,7 +25,6 @@ def create_app():
 
     # initialising our marshmallow object with the flask app
     ma.init_app(app)
-    
     from commands import db_commands
     app.register_blueprint(db_commands)
     
