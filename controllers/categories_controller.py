@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from main import db
+from sqlalchemy.exc import IntegrityError
 from models.categories import Category
 from schemas.categories_schema import category_schema, categories_schema
 
@@ -32,16 +33,27 @@ def get_category(category_id):
 # POST new category
 @categories.route("/", methods=["POST"])
 def create_category():
-    # Create a new category
     category_fields = category_schema.load(request.json)
-    new_category = Category()
-    new_category.name = category_fields["name"]
-    new_category.description = category_fields["description"]
-    # add to the database and commit
+    
+    # Pre-check for duplicate name
+    existing = db.session.scalar(
+        db.select(Category).filter_by(name=category_fields["name"])
+    )
+    if existing:
+        return jsonify({"error": "Category name already exists"}), 400
+
+    new_category = Category(
+        name=category_fields["name"],
+        description=category_fields["description"]
+    )
     db.session.add(new_category)
-    db.session.commit()
-    # return the category in the response
+    try:
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({"error": "Category name must be unique"}), 400
     return jsonify(category_schema.dump(new_category))
+
 
 # DELETE category by category_id
 @categories.route("/<int:category_id>/", methods=["DELETE"])
@@ -70,10 +82,23 @@ def update_category(category_id):
         return jsonify({"error": "Category does not exist"}), 400
     # Load the category details from the request
     category_fields = category_schema.load(request.json)
+
+    # Pre-check for duplicate name (excluding the current category itself)
+    existing = db.session.scalar(
+        db.select(Category).filter_by(name=category_fields["name"])
+    )
+    if existing and existing.category_id != category_id:
+        return jsonify({"error": "Category name already exists"}), 400
+
     # update the category details with the given values
     category.name = category_fields["name"]
     category.description = category_fields["description"]
     # commit the changes to the database
-    db.session.commit()
+    try:
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({"error": "Category name must be unique"}), 400
+
     # return the updated category in the response
     return jsonify(category_schema.dump(category))
