@@ -34,7 +34,8 @@ To manage these many-to-many relationships, the Product_Supplier junction table 
 
 The ERD for the Inventory Management Web System and its relationships can be seen in the following image.
 
-![ERD](images/Inventory_Management_ERD.png)
+![Figure 1 Inventory Management Web System ERD](images/Inventory_Management_ERD.png)
+*Figure 1: Inventory Management Web System ERD*
 
 **Relationships:**
 - Each Product should belongs to at least one Category.
@@ -67,48 +68,38 @@ The Inventory Management Web System was structured according to RESTful principl
 - **PUT** → Update existing records  
 - **DELETE** → Remove records  
 
-Each controller was designed with robust error‑handling mechanisms to prevent system failures and to maintain data integrity. In particular, safeguards were implemented to avoid duplicate entries and to ensure that invalid requests are properly managed.  
-
----
+Each controller was designed with robust error‑handling mechanisms to prevent system failures and to maintain data integrity. In particular, safeguards were implemented to avoid duplicate entries and to ensure that invalid requests are properly managed.
 
 ### Deployment & Functionality  
-The system is publicly accessible through **Render** at the following endpoint:  
-[https://web-api-server-dev1002-a3.onrender.com/products](https://web-api-server-dev1002-a3.onrender.com/products)  
-
-It also functions consistently in local environments via `http://127.0.0.1:5000/`. Persistent data storage is managed using **PostgreSQL**, ensuring reliability across both development and production contexts. This dual setup provides consistency between environments and facilitates comprehensive testing.  
-
----
-
-### API Endpoint Validation  
-Validation of the controllers was conducted using **Insomnia** and the integrated testing capabilities of **VSCode**. Screenshots from Insomnia and Render demonstrate successful executions of the GET, POST, PUT, and DELETE requests, confirming proper endpoint functionality. These tests highlight the system’s ability to handle requests accurately, enforce uniqueness constraints, and return appropriate error messages when necessary.  
- 
+The system is publicly accessible through **Render** and also functions consistently in local environments via `http://127.0.0.1:5000/`. 
+Persistent data storage is managed using **PostgreSQL**, ensuring reliability across both development and production contexts. Database connections were configured through environment variables, thereby protecting credentials and maintaining secure access practices. This dual setup provides consistency between environments and facilitates comprehensive testing.
 
 ### API Endpoint Validation  
 Validation of the controllers was conducted using **Insomnia** and the integrated testing capabilities of **VSCode**. 
 
-Screenshots from Insomnia and Render demonstrate successful executions of the GET, POST, PUT, and DELETE requests, confirming proper endpoint functionality. These tests highlight the system’s ability to handle requests accurately, enforce uniqueness constraints, and return appropriate error messages when necessary.   
+Screenshots from Insomnia and Render demonstrate successful executions of the GET, POST, PUT, and DELETE requests, confirming proper endpoint functionality.
 
 **Figures:**  
 
-![Figure 1 Successful GET Products](./images/Insomnia_GET_products.png)  
-*Figure 1: Successful GET Products request executed locally in Insomnia (`http://127.0.0.1:5000/products`) with nested Categories schema*  
+![Figure 2 Successful GET Products](./images/Insomnia_GET_products.png)  
+*Figure 2: Successful GET Products request executed locally in Insomnia (`http://127.0.0.1:5000/products`) with nested Categories schema*  
 
-![Figure 2 Successful POST Supplier](./images/Insomnia_POST_supplier.png)  
-*Figure 2: Successful POST Supplier request executed in Insomnia (http://127.0.0.1:5000/suppliers)*  
+![Figure 3 Successful POST Supplier](./images/Insomnia_POST_supplier.png)  
+*Figure 3: Successful POST Supplier request executed in Insomnia (http://127.0.0.1:5000/suppliers)*  
 
-![Figure 3 Successful PUT Product](./images/Insomnia_PUT_products_product_id.png)  
-*Figure 3: Successful PUT request executed in Insomnia, Product updated using its id(http://127.0.0.1:5000/products/1)*  
+![Figure 4 Successful PUT Product](./images/Insomnia_PUT_products_product_id.png)  
+*Figure 4: Successful PUT request executed in Insomnia, Product updated using its id(http://127.0.0.1:5000/products/1)*  
 
-![Figure 4 Successful DELETE Supplier](./images/Insomnia_DELETE_supplier_byid.png)  
-*Figure 4: Successful DELETE Supplier by supplier_id request executed in Insomnia(http://127.0.0.1:5000/suppliers/5)* 
+![Figure 5 Successful DELETE Supplier](./images/Insomnia_DELETE_supplier_byid.png)  
+*Figure 5: Successful DELETE Supplier by supplier_id request executed in Insomnia(http://127.0.0.1:5000/suppliers/5)* 
 
-![Figure 5 Unsuccessful DELETE 404 error](./images/Insomnia_DELETE_error.png)  
-*Figure 5: Unsuccessful DELETE command, 404 Error because id requested was not found in Insomnia (http://127.0.0.1:5000/suppliers/6)* 
+![Figure 6 Unsuccessful DELETE 404 error](./images/Insomnia_DELETE_error.png)  
+*Figure 6: Unsuccessful DELETE command, 404 Error because id requested was not found in Insomnia (http://127.0.0.1:5000/suppliers/6)* 
 
-![Figure 6 Render successful GET products](./images/Render_GET_products.png)  
-*Figure 6: Render deployment showing successful GET products request at public endpoint (https://web-api-server-dev1002-a3.onrender.com/products)*  
+![Figure 7 Render successful GET products](./images/Render_GET_products.png)  
+*Figure 7: Render deployment showing successful GET products request at public endpoint (https://web-api-server-dev1002-a3.onrender.com/products)*  
 
-These tests highlight the system’s ability to handle requests accurately, enforce uniqueness constraints, and return appropriate error messages when necessary.   
+These tests highlight the system’s ability to handle requests accurately, enforce uniqueness constraints, and return appropriate error messages when necessary.
 
 ## Peer's Feedback and Response
 As part of the planning stage, I sought feedback from two peers to refine the ERD and database design. Their insights helped improve the accuracy and robustness of the schema.
